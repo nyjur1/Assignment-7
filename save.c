@@ -11,6 +11,19 @@ Saves server game data to specified filepath.
 Returns 0 on success, -1 on failure.
 */
 int savegame(struct gameDB* game, char* filepath) {
+    int fd= open(filepath, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    if(fd==-1){
+        return -1;
+    }
+
+    ssize_t bytes_written = write(fd,game,sizeof(struct gameDB));
+    close(fd);
+
+    if(bytes_written!= sizeof(struct gameDB)){
+        return -1;
+    }
+
+    return 0; 
    
 }
 
@@ -19,4 +32,20 @@ Loads a file written by savegame into game.
 Returns 0 on success, -1 on failure.
 */
 int loadgame(struct gameDB* game, char* filepath) {
+
+    int fd = open(filepath, O_RDONLY);
+    if(fd==-1){
+        return -1;
+    }
+
+    ssize_t bytes_read = read(fd,game,sizeof(struct gameDB));
+
+    close(fd);
+
+     if(bytes_read!= sizeof(struct gameDB)){
+        return -1;
+    }
+
+    return 0; 
+
 }

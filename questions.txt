@@ -1,0 +1,5 @@
+(1)  if a message from client to server is dropped or
+if a message from server to client is dropped, each party may be waiting 
+on messages that are necessary for the game to continue. There would be no 
+progression. 
+(2) If the file is deleted/lost the game can not be restored most likely. 
